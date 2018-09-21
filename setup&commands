@@ -1,0 +1,70 @@
+✅KUBERNETES:
+
+Lec#1:
+Master - 10.142.0.5 - 192.168.33.10
+minion1 - 10.142.0.2 - 192.168.33.20
+minion2 - 10.142.0.3 - 192.168.33.30
+minion3 - 10.142.0.4 - 192.168.33.40
+
+[1] Launch 3 minion and 1 master CentOS 7 servers
+ Kuberenetes Architecture Image: /Users/karnikmodi/Dropbox/Study9-Devops/kubernetes architecture.png
+
+[2] On Master node: curl -sSL https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/v1.6/k8s/MasterInstall | sh
+
+[3] On every Minion: curl -sSL https://gitlab.com/roybhaskar9/devops/raw/3152e1afcc891c6be41a6faa511f6244858bc4d9/provision/kubernetes/v1.6/k8s/MinionInstall | sh
+
+[4] Open in browser for Master: https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/v1.6/k8s/MasterConfig
+
+[5] Open in Browser for Minion1: https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/v1.6/k8s/Minion1Config
+In /etc/kubernetes/kubelet : comment this line: KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
+
+
+[6] Open in browser for Minion2: https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/v1.6/k8s/Minion2Config
+In /etc/kubernetes/kubelet : comment this line: KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
+
+[7] Open in Browser for Minion3: https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/v1.6/k8s/Minion3Config
+In /etc/kubernetes/kubelet : comment this line: KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
+
+
+[8] On Master: kubectl get nodes  [o/p should be 3 nodes]
+
+Lec#2:
+
+On Master:
+[1] kubectl run mynginx --image=nginx
+[2] kubectl get deployment
+[3] kubectl get pods
+[4] kubectl describe pods mynginx-1358273036-2tqxq
+[5] kubectl get pods -o wide
+[6] Go to node shown in above command: and run below commands
+[7] lynx IP_ADDRESS
+[8] docker ps
+
+To create 2 replicas of same machine/image: Go to master:
+[9] kubectl run mynginx2 --image=nginx --replicas=2
+[10] kubectl get deployment
+[11] kubectl get pods -o wide
+
+To Scale replicas:
+[12] kubectl scale deployment mynginx --replicas=3
+[13] kubectl get pods -o wide
+[14] kubectl get deployment
+[15] kubectl describe deployments mynginx
+
+To check replica set:
+[16] kubectl get rs
+
+To delete deployment:
+[17] kubectl delete deployment mynginx
+
+[18] mkdir kubecodes
+[19] cd kubecodes
+[20]
+# wget https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/kubecoding/pod.yaml
+# wget https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/kubecoding/replicaset.yaml
+# wget https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/kubecoding/deployment.yaml
+# wget https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/kubecoding/multipod.yaml
+# wget https://gitlab.com/roybhaskar9/devops/raw/master/provision/kubernetes/kubecoding/hostport.yaml
+
+[21] kubectl apply -f pod.yaml
+[22] kubectl apply -f replicaset.yaml
